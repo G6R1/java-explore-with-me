@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.practicum.explorewithme.dto.user.UserShortDto;
-import ru.practicum.explorewithme.dto.сategory.CategoryDto;
+import ru.practicum.explorewithme.dto.test.CategoryDto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

@@ -1,8 +1,8 @@
 package ru.practicum.explorewithme.services.impl;
 
 import org.springframework.stereotype.Service;
-import ru.practicum.explorewithme.dto.сategory.CategoryDto;
-import ru.practicum.explorewithme.dto.сategory.NewCategoryDto;
+import ru.practicum.explorewithme.dto.test.CategoryDto;
+import ru.practicum.explorewithme.dto.test.NewCategoryDto;
 import ru.practicum.explorewithme.exceptions.ForbiddenException;
 import ru.practicum.explorewithme.exceptions.NotFoundException;
 import ru.practicum.explorewithme.mappers.CategoriesMapper;

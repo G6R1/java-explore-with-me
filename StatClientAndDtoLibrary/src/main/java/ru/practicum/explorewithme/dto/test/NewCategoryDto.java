@@ -1,4 +1,4 @@
-package ru.practicum.explorewithme.dto.сategory;
+package ru.practicum.explorewithme.dto.test;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,15 +6,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
+/**
+ * Данные для добавления новой категории
+ */
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class CategoryDto {
-    @NotNull
-    Long id;
+public class NewCategoryDto {
     @NotBlank
     String name;
 }

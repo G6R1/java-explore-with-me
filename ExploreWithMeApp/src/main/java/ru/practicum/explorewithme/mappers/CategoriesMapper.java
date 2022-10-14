@@ -1,6 +1,6 @@
 package ru.practicum.explorewithme.mappers;
 
-import ru.practicum.explorewithme.dto.сategory.CategoryDto;
+import ru.practicum.explorewithme.dto.test.CategoryDto;
 import ru.practicum.explorewithme.models.Category;
 
 public class CategoriesMapper {
