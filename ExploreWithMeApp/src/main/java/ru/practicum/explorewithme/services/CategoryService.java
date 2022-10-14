@@ -1,7 +1,7 @@
 package ru.practicum.explorewithme.services;
 
-import ru.practicum.explorewithme.dto.test.CategoryDto;
-import ru.practicum.explorewithme.dto.test.NewCategoryDto;
+import ru.practicum.explorewithme.dto.categories.CategoryDto;
+import ru.practicum.explorewithme.dto.categories.NewCategoryDto;
 
 import java.util.List;
 

@@ -1,6 +1,5 @@
 package ru.practicum.explorewithme.services.statclient;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;

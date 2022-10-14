@@ -13,13 +13,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select * " +
             "from users as u " +
             "LIMIT ?2 OFFSET ?1", nativeQuery = true)
-    List<User> FindAllFromSize(Integer from, Integer size);
+    List<User> findAllFromSize(Integer from, Integer size);
 
     @Query(value = "select * " +
             "from users as u " +
             "where u.user_id in ?1 " +
             "LIMIT ?3 OFFSET ?2", nativeQuery = true)
-    List<User> FindAllByIdsFromSize(Set<Long> ids, Integer from, Integer size);
+    List<User> findAllByIdsFromSize(Set<Long> ids, Integer from, Integer size);
 
     @Modifying
     @Query(value = "delete from subscriptions as s " +

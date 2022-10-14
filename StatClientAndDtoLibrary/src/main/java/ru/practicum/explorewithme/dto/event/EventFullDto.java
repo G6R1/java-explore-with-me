@@ -8,7 +8,7 @@ import lombok.Setter;
 import ru.practicum.explorewithme.EventState;
 import ru.practicum.explorewithme.Location;
 import ru.practicum.explorewithme.dto.user.UserShortDto;
-import ru.practicum.explorewithme.dto.test.CategoryDto;
+import ru.practicum.explorewithme.dto.categories.CategoryDto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

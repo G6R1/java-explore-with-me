@@ -3,8 +3,8 @@ package ru.practicum.explorewithme.controllers.admin;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.explorewithme.dto.test.CategoryDto;
-import ru.practicum.explorewithme.dto.test.NewCategoryDto;
+import ru.practicum.explorewithme.dto.categories.CategoryDto;
+import ru.practicum.explorewithme.dto.categories.NewCategoryDto;
 import ru.practicum.explorewithme.services.CategoryService;
 
 import javax.validation.Valid;
