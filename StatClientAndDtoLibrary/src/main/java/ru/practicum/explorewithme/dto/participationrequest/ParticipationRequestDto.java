@@ -17,10 +17,10 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ParticipationRequestDto {
-    Long id;
+    private Long id;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    LocalDateTime created;
-    Long event;
-    Long requester;
-    ParticipationStatus status;
+    private LocalDateTime created;
+    private Long event;
+    private Long requester;
+    private ParticipationStatus status;
 }

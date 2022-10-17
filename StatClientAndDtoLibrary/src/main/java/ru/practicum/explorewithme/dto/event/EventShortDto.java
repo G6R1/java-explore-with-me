@@ -17,20 +17,20 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class EventShortDto {
-    Long id;
+    private Long id;
     @NotBlank
-    String title;
+    private String title;
     @NotBlank
-    String annotation;
+    private String annotation;
     @NotNull
-    CategoryDto category;
+    private CategoryDto category;
     @NotNull
-    UserShortDto initiator;
+    private UserShortDto initiator;
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    LocalDateTime eventDate;
+    private LocalDateTime eventDate;
     @NotNull
-    Boolean paid;
-    Integer confirmedRequests;
-    Integer views;
+    private Boolean paid;
+    private Integer confirmedRequests;
+    private Integer views;
 }

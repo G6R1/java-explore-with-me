@@ -18,8 +18,8 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class NewUserRequest {
     @NotBlank
-    String name;
+    public String name;
     @NotNull
     @Email
-    String email;
+    public String email;
 }

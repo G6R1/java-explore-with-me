@@ -17,14 +17,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class AdminUpdateEventRequest {
-    String title;
-    String annotation;
-    String description;
+    private String title;
+    private String annotation;
+    private String description;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    LocalDateTime eventDate;
-    Long category;
-    Location location;
-    Boolean paid;
-    Integer participantLimit;
-    Boolean requestModeration;
+    private LocalDateTime eventDate;
+    private Long category;
+    private Location location;
+    private Boolean paid;
+    private Integer participantLimit;
+    private Boolean requestModeration;
 }

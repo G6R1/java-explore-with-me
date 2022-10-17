@@ -108,7 +108,7 @@ public class EventServiceImpl implements EventService {
     public EventFullDto getMyEvent(Long userId, Long eventId) {
         Event event = getEventFromDB(eventId);
         if (!Objects.equals(event.getInitiator().getId(), userId))
-            throw new ForbiddenException();
+            throw new ForbiddenException("InitiatorId not equals requestorId");
         return EventMapper.toEventFullDto(event);
     }
 
@@ -121,7 +121,7 @@ public class EventServiceImpl implements EventService {
     @Override
     public EventFullDto createEvent(NewEventDto newEventDto, Long userId) {
         if (newEventDto.getEventDate().isBefore(LocalDateTime.now().plusHours(2)))
-            throw new BadRequestException();
+            throw new BadRequestException("Less than 2 hours before EventDate");
 
         User initiator = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User with id=" + userId + " was not found."));
@@ -137,10 +137,10 @@ public class EventServiceImpl implements EventService {
         Event event = getEventFromDB(updateEventRequest.getEventId());
 
         if (updateEventRequest.getEventDate().isBefore(LocalDateTime.now().plusHours(2)))
-            throw new BadRequestException();
+            throw new BadRequestException("Less than 2 hours before EventDate");
 
         if (event.getState().equals(EventState.PUBLISHED))
-            throw new ForbiddenException();
+            throw new ForbiddenException("Can't patch PUBLISHED events");
         if (event.getState().equals(EventState.CANCELED))
             event.setState(EventState.PENDING);
 

@@ -32,7 +32,10 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
     private final EventService eventService;
     private final UserRepository userRepository;
 
-    public ParticipationRequestServiceImpl(ParticipationRequestRepository requestRepository, EventRepository eventRepository, EventService eventService, UserRepository userRepository) {
+    public ParticipationRequestServiceImpl(ParticipationRequestRepository requestRepository,
+                                           EventRepository eventRepository,
+                                           EventService eventService,
+                                           UserRepository userRepository) {
         this.requestRepository = requestRepository;
         this.eventRepository = eventRepository;
         this.eventService = eventService;
@@ -131,7 +134,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
         return ParticipationRequestMapper.toParticipationRequestDto(savedRequest);
     }
 
-    @Override/////////////////////////////////
+    @Override
     public ParticipationRequestDto cancelRequest(Long userId, Long requestId) {
         ParticipationRequest request = getRequestFromDB(requestId);
         if (!Objects.equals(request.getRequester().getId(), userId))

@@ -19,7 +19,7 @@ public class ErrorHandler {
     public ApiError handleBadRequestException(final BadRequestException e) {
         log.info("error: BadRequestException");
         return new ApiError(null,
-                "Only pending or canceled events can be changed",
+                e.getMessage(),
                 "For the requested operation the conditions are not met.",
                 HttpStatus.NOT_FOUND,
                 LocalDateTime.now());

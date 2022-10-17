@@ -19,7 +19,7 @@ import java.util.Set;
 public class NewCompilationDto {
 
     @NotBlank
-    String title;
-    Boolean pinned = false;
-    Set<Long> events = new HashSet<>();
+    private String title;
+    private Boolean pinned = false;
+    private Set<Long> events = new HashSet<>();
 }

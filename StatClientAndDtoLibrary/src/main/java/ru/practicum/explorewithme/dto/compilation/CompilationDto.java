@@ -16,10 +16,10 @@ import java.util.List;
 @Setter
 public class CompilationDto {
     @NotNull
-    Long id;
+    private Long id;
     @NotNull
-    Boolean pinned;
+    private Boolean pinned;
     @NotBlank
     String title;
-    List<EventShortDto> events;
+    private List<EventShortDto> events;
 }

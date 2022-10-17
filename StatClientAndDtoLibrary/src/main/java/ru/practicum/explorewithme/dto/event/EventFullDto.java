@@ -19,27 +19,27 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class EventFullDto {
-    Long id;
+    private Long id;
     @NotBlank
-    String title;
+    private String title;
     @NotBlank
-    String annotation;
-    String description;
-    CategoryDto category;
-    LocalDateTime createdOn;
-    LocalDateTime publishedOn;
+    private String annotation;
+    private String description;
+    private CategoryDto category;
+    private LocalDateTime createdOn;
+    private LocalDateTime publishedOn;
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    LocalDateTime eventDate;
+    private LocalDateTime eventDate;
     @NotNull
-    UserShortDto initiator;
+    private UserShortDto initiator;
     @NotNull
-    Location location;
+    private Location location;
     @NotNull
-    Boolean paid;
-    Integer participantLimit;
-    Boolean requestModeration;
-    Integer confirmedRequests;
-    EventState state;
-    Integer views;
+    private Boolean paid;
+    private Integer participantLimit;
+    private Boolean requestModeration;
+    private Integer confirmedRequests;
+    private EventState state;
+    private Integer views;
 }

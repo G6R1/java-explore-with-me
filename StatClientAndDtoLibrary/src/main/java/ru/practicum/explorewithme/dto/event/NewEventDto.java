@@ -23,22 +23,22 @@ import java.time.LocalDateTime;
 public class NewEventDto {
     @NotBlank
     @Size(min = 3, max = 120)
-    String title;
+    private String title;
     @NotBlank
     @Size(min = 20, max = 2000)
-    String annotation;
+    private String annotation;
     @Size(min = 20, max = 7000)
-    String description;
+    private String description;
     @NotNull
-    Long category;
+    private Long category;
     @NotNull
     @Future
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    LocalDateTime eventDate;
+    private LocalDateTime eventDate;
     @NotNull
-    Location location;
+    private Location location;
     @NotNull
-    Boolean paid;
-    Integer participantLimit = 0;
-    Boolean requestModeration = true;
+    private Boolean paid;
+    private Integer participantLimit = 0;
+    private Boolean requestModeration = true;
 }

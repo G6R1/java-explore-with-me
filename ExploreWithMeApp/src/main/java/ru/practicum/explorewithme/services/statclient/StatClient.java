@@ -20,9 +20,6 @@ public class StatClient {
 
     private final WebClient client;
     private final Environment env;
-    //@Value("${stat-server.url}")
-    //private String serverUri;
-    //"http://localhost:9090";"${stat-server.url}";
 
     public StatClient(Environment env) {
         this.env = env;

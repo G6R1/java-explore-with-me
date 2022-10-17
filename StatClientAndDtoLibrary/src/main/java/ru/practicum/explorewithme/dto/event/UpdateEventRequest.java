@@ -14,14 +14,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class UpdateEventRequest {
-    String title;
-    String annotation;
-    String description;
-    Long category;
+    private String title;
+    private String annotation;
+    private String description;
+    private Long category;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    LocalDateTime eventDate;
+    private LocalDateTime eventDate;
     @NotNull
-    Long eventId;
-    Boolean paid;
-    Integer participantLimit;
+    private Long eventId;
+    private Boolean paid;
+    private Integer participantLimit;
 }

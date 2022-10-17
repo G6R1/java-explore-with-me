@@ -11,7 +11,7 @@ public interface CompilationRepository extends JpaRepository<Compilation, Long> 
 
     @Query(value = "select * " +
             "from compilations " +
-            "LIMIT ?2 OFFSET ?1", nativeQuery = true)
+            "limit ?2 offset ?1", nativeQuery = true)
     List<Compilation> searchCompilationsPage(Integer from, Integer size);
 
     /*
@@ -20,7 +20,7 @@ public interface CompilationRepository extends JpaRepository<Compilation, Long> 
     @Query(value = "select * " +
             "from compilations as c " +
             "where c.pinned = CAST(?1 as boolean) " +
-            "LIMIT ?3 OFFSET ?2", nativeQuery = true)
+            "limit ?3 offset ?2", nativeQuery = true)
     List<Compilation> searchCompilationsPageWithPinned(Boolean pinned, Integer from, Integer size);
 
     @Modifying
@@ -29,7 +29,7 @@ public interface CompilationRepository extends JpaRepository<Compilation, Long> 
     void deleteEventFromCompilation(Long compId, Long eventId);
 
     @Modifying
-    @Query(value = "INSERT INTO events_compilation (compilation_id, event_id)" +
-            "VALUES (?1, ?2)", nativeQuery = true)
+    @Query(value = "insert into events_compilation (compilation_id, event_id)" +
+            "values (?1, ?2)", nativeQuery = true)
     void addEventToCompilation(Long compId, Long eventId);
 }

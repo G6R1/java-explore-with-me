@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 public class UserShortDto {
     @NotNull
-    Long id;
+    public Long id;
     @NotBlank
-    String name;
+    public String name;
 }

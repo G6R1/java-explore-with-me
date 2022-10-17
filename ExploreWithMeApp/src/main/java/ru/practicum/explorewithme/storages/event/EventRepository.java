@@ -12,7 +12,7 @@ public interface EventRepository extends JpaRepository<Event, Long>, EventCriter
     @Query(value = "select * " +
             "from events as e " +
             "where e.initiator_id = ?1 " +
-            "LIMIT ?3 OFFSET ?2", nativeQuery = true)
+            "limit ?3 offset ?2", nativeQuery = true)
     List<Event> findMyEvents(Long userId, Integer from, Integer size);
 
     /*

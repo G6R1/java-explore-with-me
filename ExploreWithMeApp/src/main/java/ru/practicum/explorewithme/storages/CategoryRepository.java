@@ -10,6 +10,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
 
     @Query(value = "select * " +
             "from categories " +
-            "LIMIT ?2 OFFSET ?1", nativeQuery = true)
+            "limit ?2 offset ?1", nativeQuery = true)
     List<Category> searchCategoriesPage(Integer from, Integer size);
 }
