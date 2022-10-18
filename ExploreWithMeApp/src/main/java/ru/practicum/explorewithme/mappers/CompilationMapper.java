@@ -11,9 +11,13 @@ public class CompilationMapper {
         if (compilation == null)
             return null;
 
-        return new CompilationDto(compilation.getId(),
-                compilation.getPinned(),
-                compilation.getTitle(),
-                compilation.getEvents().stream().map(EventMapper::toEventShortDto).collect(Collectors.toList()));
+        return CompilationDto.builder()
+                .id(compilation.getId())
+                .pinned(compilation.getPinned())
+                .title(compilation.getTitle())
+                .events(compilation.getEvents().stream()
+                        .map(EventMapper::toEventShortDto)
+                        .collect(Collectors.toList()))
+                .build();
     }
 }

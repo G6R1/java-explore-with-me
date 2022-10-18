@@ -3,7 +3,6 @@ package ru.practicum.explorewithme.services.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explorewithme.EventState;
-import ru.practicum.explorewithme.EventsSortType;
 import ru.practicum.explorewithme.dto.event.*;
 import ru.practicum.explorewithme.dto.statistic.EndpointHitDto;
 import ru.practicum.explorewithme.exceptions.BadRequestException;
@@ -18,12 +17,12 @@ import ru.practicum.explorewithme.services.statclient.StatClient;
 import ru.practicum.explorewithme.storages.CategoryRepository;
 import ru.practicum.explorewithme.storages.UserRepository;
 import ru.practicum.explorewithme.storages.event.EventRepository;
+import ru.practicum.explorewithme.storages.event.EventSearchParamsModel;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,26 +40,10 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventShortDto> getEvents(String text,
-                                         Set<Long> categories,
-                                         Boolean paid,
-                                         Boolean onlyAvailable,
-                                         EventsSortType sort,
-                                         LocalDateTime rangeStart,
-                                         LocalDateTime rangeEnd,
-                                         Integer from,
-                                         Integer size,
+    public List<EventShortDto> getEvents(EventSearchParamsModel paramModel,
                                          HttpServletRequest request) {
 
-        List<Event> eventList = eventRepository.publicSearchByParameters(text,
-                categories,
-                paid,
-                onlyAvailable,
-                sort,
-                rangeStart,
-                rangeEnd,
-                from,
-                size);
+        List<Event> eventList = eventRepository.publicSearchByParameters(paramModel);
 
         statClient.createEndpointHit(new EndpointHitDto(null,
                 "ewm-main-service",
@@ -72,21 +55,9 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<EventFullDto> getEventsAdmin(Set<Long> users,
-                                             Set<EventState> states,
-                                             Set<Integer> categories,
-                                             LocalDateTime rangeStart,
-                                             LocalDateTime rangeEnd,
-                                             Integer from,
-                                             Integer size) {
+    public List<EventFullDto> getEventsAdmin(EventSearchParamsModel paramModel) {
 
-        List<Event> eventList = eventRepository.adminSearchByParameters(users,
-                states,
-                categories,
-                rangeStart,
-                rangeEnd,
-                from,
-                size);
+        List<Event> eventList = eventRepository.adminSearchByParameters(paramModel);
 
         return eventList.stream().map(EventMapper::toEventFullDto).collect(Collectors.toList());
     }

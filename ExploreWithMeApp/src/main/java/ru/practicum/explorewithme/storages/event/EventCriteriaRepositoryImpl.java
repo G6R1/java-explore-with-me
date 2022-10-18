@@ -25,15 +25,17 @@ public class EventCriteriaRepositoryImpl implements EventCriteriaRepository {
     }
 
     @Override
-    public List<Event> publicSearchByParameters(String text,
-                                                Set<Long> categories,
-                                                Boolean paid,
-                                                Boolean onlyAvailable,
-                                                EventsSortType sort,
-                                                LocalDateTime rangeStart,
-                                                LocalDateTime rangeEnd,
-                                                Integer from,
-                                                Integer size) {
+    public List<Event> publicSearchByParameters(EventSearchParamsModel paramModel) {
+
+        String text = paramModel.getText();
+        Set<Long> categories = paramModel.getCategories();
+        Boolean paid = paramModel.getPaid();
+        LocalDateTime rangeStart = paramModel.getRangeStart();
+        LocalDateTime rangeEnd = paramModel.getRangeEnd();
+        Boolean onlyAvailable = paramModel.getOnlyAvailable();
+        EventsSortType sort = paramModel.getSort();
+        Integer from = paramModel.getFrom();
+        Integer size = paramModel.getSize();
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Event> cr = cb.createQuery(Event.class);
@@ -69,13 +71,15 @@ public class EventCriteriaRepositoryImpl implements EventCriteriaRepository {
     }
 
     @Override
-    public List<Event> adminSearchByParameters(Set<Long> users,
-                                               Set<EventState> states,
-                                               Set<Integer> categories,
-                                               LocalDateTime rangeStart,
-                                               LocalDateTime rangeEnd,
-                                               Integer from,
-                                               Integer size) {
+    public List<Event> adminSearchByParameters(EventSearchParamsModel paramModel) {
+
+        Set<Long> users = paramModel.getUsers();
+        Set<EventState> states = paramModel.getStates();
+        Set<Long> categories = paramModel.getCategories();
+        LocalDateTime rangeStart = paramModel.getRangeStart();
+        LocalDateTime rangeEnd = paramModel.getRangeEnd();
+        Integer from = paramModel.getFrom();
+        Integer size = paramModel.getSize();
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<Event> cr = cb.createQuery(Event.class);

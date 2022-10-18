@@ -1,14 +1,11 @@
 package ru.practicum.explorewithme.dto.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.practicum.explorewithme.EventState;
 import ru.practicum.explorewithme.Location;
-import ru.practicum.explorewithme.dto.user.UserShortDto;
 import ru.practicum.explorewithme.dto.categories.CategoryDto;
+import ru.practicum.explorewithme.dto.user.UserShortDto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -18,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class EventFullDto {
     private Long id;
     @NotBlank

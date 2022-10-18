@@ -1,10 +1,7 @@
 package ru.practicum.explorewithme.dto.event;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.practicum.explorewithme.Location;
 
 import javax.validation.constraints.Future;
@@ -20,6 +17,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class NewEventDto {
     @NotBlank
     @Size(min = 3, max = 120)

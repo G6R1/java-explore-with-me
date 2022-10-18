@@ -8,8 +8,9 @@ public class CategoriesMapper {
         if (category == null)
             return null;
 
-        return new CategoryDto(category.getId(), category.getName());
+        return CategoryDto.builder()
+                .id(category.getId())
+                .name(category.getName())
+                .build();
     }
-
-
 }

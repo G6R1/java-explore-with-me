@@ -1,10 +1,7 @@
 package ru.practicum.explorewithme.dto.participationrequest;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.practicum.explorewithme.ParticipationStatus;
 
 import java.time.LocalDateTime;
@@ -16,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class ParticipationRequestDto {
     private Long id;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

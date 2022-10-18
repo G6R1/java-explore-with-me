@@ -10,6 +10,7 @@ import ru.practicum.explorewithme.EventsSortType;
 import ru.practicum.explorewithme.dto.event.EventFullDto;
 import ru.practicum.explorewithme.dto.event.EventShortDto;
 import ru.practicum.explorewithme.services.EventService;
+import ru.practicum.explorewithme.storages.event.EventSearchParamsModel;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.Positive;
@@ -43,16 +44,18 @@ public class EventPublicController {
                                          @RequestParam(required = false, defaultValue = "10") @Positive Integer size,
                                          HttpServletRequest request) {
 
-        List<EventShortDto> dtoList = eventService.getEvents(text,
-                categories,
-                paid,
-                onlyAvailable,
-                sort,
-                rangeStart,
-                rangeEnd,
-                from,
-                size,
-                request);
+        EventSearchParamsModel paramModel = EventSearchParamsModel.builder()
+                .text(text)
+                .categories(categories)
+                .paid(paid)
+                .onlyAvailable(onlyAvailable)
+                .sort(sort)
+                .rangeStart(rangeStart)
+                .rangeEnd(rangeEnd)
+                .from(from)
+                .size(size)
+                .build();
+        List<EventShortDto> dtoList = eventService.getEvents(paramModel, request);
         log.info("Выполнен запрос getEvents");
         return dtoList;
     }

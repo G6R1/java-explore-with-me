@@ -9,10 +9,12 @@ public class ParticipationRequestMapper {
         if (request == null)
             return null;
 
-        return new ParticipationRequestDto(request.getId(),
-                request.getCreated(),
-                request.getEvent().getId(),
-                request.getRequester().getId(),
-                request.getStatus());
+        return ParticipationRequestDto.builder()
+                .id(request.getId())
+                .created(request.getCreated())
+                .event(request.getEvent().getId())
+                .requester(request.getRequester().getId())
+                .status(request.getStatus())
+                .build();
     }
 }

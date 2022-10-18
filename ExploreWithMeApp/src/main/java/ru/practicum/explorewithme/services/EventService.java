@@ -1,33 +1,15 @@
 package ru.practicum.explorewithme.services;
 
-import ru.practicum.explorewithme.EventState;
-import ru.practicum.explorewithme.EventsSortType;
 import ru.practicum.explorewithme.dto.event.*;
+import ru.practicum.explorewithme.storages.event.EventSearchParamsModel;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 public interface EventService {
-    List<EventShortDto> getEvents(String text,
-                                  Set<Long> categories,
-                                  Boolean paid,
-                                  Boolean onlyAvailable,
-                                  EventsSortType sort,
-                                  LocalDateTime rangeStart,
-                                  LocalDateTime rangeEnd,
-                                  Integer from,
-                                  Integer size,
-                                  HttpServletRequest request);
+    List<EventShortDto> getEvents(EventSearchParamsModel paramModel, HttpServletRequest request);
 
-    List<EventFullDto> getEventsAdmin(Set<Long> users,
-                                      Set<EventState> states,
-                                      Set<Integer> categories,
-                                      LocalDateTime rangeStart,
-                                      LocalDateTime rangeEnd,
-                                      Integer from,
-                                      Integer size);
+    List<EventFullDto> getEventsAdmin(EventSearchParamsModel paramModel);
 
 
     EventFullDto getEvent(Long eventId, HttpServletRequest request);

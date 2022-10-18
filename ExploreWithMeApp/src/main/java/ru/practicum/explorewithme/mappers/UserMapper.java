@@ -10,13 +10,20 @@ public class UserMapper {
         if (user == null)
             return null;
 
-        return new UserShortDto(user.getId(), user.getName());
+        return UserShortDto.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .build();
     }
 
     public static UserDto toUserDto(User user) {
         if (user == null)
             return null;
 
-        return new UserDto(user.getId(), user.getName(), user.getEmail());
+        return UserDto.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .build();
     }
 }

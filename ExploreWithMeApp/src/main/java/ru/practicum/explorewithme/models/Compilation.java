@@ -11,6 +11,7 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
+@Builder
 @Entity
 @Table(name = "compilations")
 public class Compilation {
