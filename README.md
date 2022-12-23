@@ -38,7 +38,6 @@ Java 11+, Spring Boot, Apache Maven, PostgreSQL, Hibernate, Docker.
 * POST /users/{userId}/requests - добавление запроса от текущего пользователя на участие в событии.
 * PATCH /users/{userId}/requests/{reqId}/cancel - отмена своего запроса на участие в событии.
 ### Admin endpoints
-### Private endpoints
 * GET /admin/events - поиск событий. 
 * PUT /admin/events/{eventId} - редактирование события. 
 * PATCH /admin/events/{userId}/events - публикация события.
