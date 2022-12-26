@@ -1,5 +1,6 @@
 package ru.practicum.explorewithme.services.impl;
 
+import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explorewithme.EventsSortType;
@@ -22,10 +23,12 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
+    private final EventMapper eventMapper;
 
     public SubscriptionServiceImpl(UserRepository userRepository, EventRepository eventRepository) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
+        this.eventMapper = Mappers.getMapper(EventMapper.class);
     }
 
     @Override
@@ -54,7 +57,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
 
         List<Event> eventList = eventRepository.findSubscriptionsEvents(subscriptionsIds, sort, from, size);
 
-        return eventList.stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
+        return eventList.stream().map(eventMapper::toEventShortDto).collect(Collectors.toList());
     }
 
     private User getUserFromDB(Long userId) {
