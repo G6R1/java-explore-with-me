@@ -100,7 +100,9 @@ public class EventServiceImpl implements EventService {
         User initiator = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User with id=" + userId + " was not found."));
         Category category = getCategoryFromDB(newEventDto.getCategory());
-        Event eventForSave = eventMapper.toEvent(newEventDto, category, initiator);
+        Event eventForSave = eventMapper.toEvent(newEventDto);
+        eventForSave.setCategory(category);
+        eventForSave.setInitiator(initiator);
 
         Event saveEvent = eventRepository.save(eventForSave);
         return eventMapper.toEventFullDto(saveEvent);

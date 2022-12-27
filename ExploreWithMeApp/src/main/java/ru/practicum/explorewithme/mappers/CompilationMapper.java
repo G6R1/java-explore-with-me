@@ -1,6 +1,5 @@
 package ru.practicum.explorewithme.mappers;
 
-import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import ru.practicum.explorewithme.dto.compilation.CompilationDto;
 import ru.practicum.explorewithme.models.Compilation;
