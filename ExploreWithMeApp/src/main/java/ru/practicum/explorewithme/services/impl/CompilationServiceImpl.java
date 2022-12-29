@@ -21,10 +21,12 @@ public class CompilationServiceImpl implements CompilationService {
 
     private final CompilationRepository compilationRepository;
     private final EventRepository eventRepository;
+    private final CompilationMapper compilationMapper;
 
-    public CompilationServiceImpl(CompilationRepository compilationRepository, EventRepository eventRepository) {
+    public CompilationServiceImpl(CompilationRepository compilationRepository, EventRepository eventRepository, CompilationMapper compilationMapper) {
         this.compilationRepository = compilationRepository;
         this.eventRepository = eventRepository;
+        this.compilationMapper = compilationMapper;
     }
 
     @Override
@@ -38,13 +40,13 @@ public class CompilationServiceImpl implements CompilationService {
             compilationsList = compilationRepository.searchCompilationsPageWithPinned(pinned, from, size);
         }
 
-        return compilationsList.stream().map(CompilationMapper::toCompilationDto).collect(Collectors.toList());
+        return compilationsList.stream().map(compilationMapper::toCompilationDto).collect(Collectors.toList());
     }
 
     @Override
     public CompilationDto getCompilation(Long compId) {
         Compilation compilation = getCompilationFromDB(compId);
-        return CompilationMapper.toCompilationDto(compilation);
+        return compilationMapper.toCompilationDto(compilation);
     }
 
     @Override
@@ -54,7 +56,7 @@ public class CompilationServiceImpl implements CompilationService {
                 newCompilationDto.getTitle(),
                 newCompilationDto.getEvents().stream().map(this::getEventFromDB).collect(Collectors.toSet()));
         Compilation newCompilation = compilationRepository.save(compilation);
-        return CompilationMapper.toCompilationDto(newCompilation);
+        return compilationMapper.toCompilationDto(newCompilation);
     }
 
     @Override

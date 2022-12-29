@@ -8,6 +8,7 @@ import ru.practicum.explorewithme.dto.event.EventShortDto;
 import ru.practicum.explorewithme.exceptions.ConflictException;
 import ru.practicum.explorewithme.exceptions.NotFoundException;
 import ru.practicum.explorewithme.mappers.EventMapper;
+import ru.practicum.explorewithme.mappers.TestEvMap;
 import ru.practicum.explorewithme.models.Event;
 import ru.practicum.explorewithme.models.User;
 import ru.practicum.explorewithme.services.SubscriptionService;
@@ -24,11 +25,16 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
+    private final TestEvMap testEvMap;
 
-    public SubscriptionServiceImpl(UserRepository userRepository, EventRepository eventRepository) {
+    public SubscriptionServiceImpl(UserRepository userRepository,
+                                   EventRepository eventRepository,
+                                   TestEvMap testEvMap,
+                                   EventMapper eventMapper) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
-        this.eventMapper = Mappers.getMapper(EventMapper.class);
+        this.testEvMap = testEvMap;
+        this.eventMapper = eventMapper;
     }
 
     @Override

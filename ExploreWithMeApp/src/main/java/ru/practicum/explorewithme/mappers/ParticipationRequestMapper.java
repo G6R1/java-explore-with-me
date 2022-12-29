@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import ru.practicum.explorewithme.dto.participationrequest.ParticipationRequestDto;
 import ru.practicum.explorewithme.models.ParticipationRequest;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ParticipationRequestMapper {
 
     @Mapping(target = "event", source = "request.event.id")
