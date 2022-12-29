@@ -1,81 +1,41 @@
 package ru.practicum.explorewithme.mappers;
 
+
+import org.mapstruct.InjectionStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import ru.practicum.explorewithme.EventState;
 import ru.practicum.explorewithme.Location;
 import ru.practicum.explorewithme.dto.event.EventFullDto;
 import ru.practicum.explorewithme.dto.event.EventShortDto;
 import ru.practicum.explorewithme.dto.event.NewEventDto;
-import ru.practicum.explorewithme.models.Category;
 import ru.practicum.explorewithme.models.Event;
-import ru.practicum.explorewithme.models.User;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
+@Mapper(componentModel = "spring", uses = {UserMapper.class, CategoriesMapper.class}, injectionStrategy = InjectionStrategy.CONSTRUCTOR)
+public abstract class EventMapper {
 
-public class EventMapper {
+    public abstract EventShortDto toEventShortDto(Event event);
 
-    public static EventShortDto toEventShortDto(Event event) {
-        if (event == null)
-            return null;
+    @Mapping(target = "location", expression = "java(getLocation(event.getLat(), event.getLon()))")
+    public abstract EventFullDto toEventFullDto(Event event);
 
-        return EventShortDto.builder()
-                .id(event.getId())
-                .title(event.getTitle())
-                .annotation(event.getAnnotation())
-                .category(CategoriesMapper.toCategoryDto(event.getCategory()))
-                .initiator(UserMapper.toUserShortDto(event.getInitiator()))
-                .eventDate(event.getEventDate())
-                .paid(event.getPaid())
-                .confirmedRequests(event.getConfirmedRequests())
-                .views(event.getViews())
-                .build();
+    protected Location getLocation(Double lat, Double lon) {
+        return new Location(lat, lon);
     }
 
-    public static EventFullDto toEventFullDto(Event event) {
-        if (event == null)
-            return null;
+    @Mapping(target = "lat", source = "newEventDto.location.lat")
+    @Mapping(target = "lon", source = "newEventDto.location.lon")
+    @Mapping(target = "confirmedRequests", constant = "0")
+    @Mapping(target = "createdOn", expression = "java(java.time.LocalDateTime.now())")
+    @Mapping(target = "participantLimit", source = "participantLimit", defaultValue = "0")
+    @Mapping(target = "requestModeration", source = "requestModeration", defaultValue = "true")
+    @Mapping(target = "state", expression = "java(eventStatePending())")
+    @Mapping(target = "views", constant = "0")
+    @Mapping(target = "compilations", expression = "java(new java.util.HashSet<>())")
+    @Mapping(target = "category", ignore = true)
+    public abstract Event toEvent(NewEventDto newEventDto);
 
-        return EventFullDto.builder()
-                .id(event.getId())
-                .title(event.getTitle())
-                .annotation(event.getAnnotation())
-                .description(event.getDescription())
-                .category(CategoriesMapper.toCategoryDto(event.getCategory()))
-                .createdOn(event.getCreatedOn())
-                .publishedOn(event.getPublishedOn())
-                .initiator(UserMapper.toUserShortDto(event.getInitiator()))
-                .location(new Location(event.getLat(), event.getLon()))
-                .eventDate(event.getEventDate())
-                .paid(event.getPaid())
-                .participantLimit(event.getParticipantLimit())
-                .requestModeration(event.getRequestModeration())
-                .confirmedRequests(event.getConfirmedRequests())
-                .state(event.getState())
-                .views(event.getViews())
-                .build();
-    }
-
-    public static Event toEvent(NewEventDto newEventDto, Category category, User initiator) {
-        if (newEventDto == null)
-            return null;
-
-        return Event.builder()
-                .title(newEventDto.getTitle())
-                .annotation(newEventDto.getAnnotation())
-                .description(newEventDto.getDescription())
-                .category(category)
-                .confirmedRequests(0)
-                .createdOn(LocalDateTime.now())
-                .eventDate(newEventDto.getEventDate())
-                .initiator(initiator)
-                .lat(newEventDto.getLocation().getLat())
-                .lon(newEventDto.getLocation().getLon())
-                .paid(newEventDto.getPaid())
-                .participantLimit(newEventDto.getParticipantLimit() == null ? 0 : newEventDto.getParticipantLimit())
-                .requestModeration(newEventDto.getRequestModeration() == null || newEventDto.getRequestModeration())
-                .state(EventState.PENDING)
-                .views(0)
-                .compilations(new HashSet<>())
-                .build();
+    protected EventState eventStatePending() {
+        return EventState.PENDING;
     }
 }

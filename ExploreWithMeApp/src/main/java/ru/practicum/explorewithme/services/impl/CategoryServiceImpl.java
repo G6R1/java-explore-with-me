@@ -20,29 +20,33 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final EventRepository eventRepository;
+    private final CategoriesMapper categoriesMapper;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, EventRepository eventRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository,
+                               EventRepository eventRepository,
+                               CategoriesMapper categoriesMapper) {
         this.categoryRepository = categoryRepository;
         this.eventRepository = eventRepository;
+        this.categoriesMapper = categoriesMapper;
     }
 
     @Override
     public List<CategoryDto> getCategories(Integer from, Integer size) {
         List<Category> categoryList = categoryRepository.searchCategoriesPage(from, size);
-        return categoryList.stream().map(CategoriesMapper::toCategoryDto).collect(Collectors.toList());
+        return categoryList.stream().map(categoriesMapper::toCategoryDto).collect(Collectors.toList());
     }
 
     @Override
     public CategoryDto getCategory(Long catId) {
         Category category = getCategoryFromDB(catId);
-        return CategoriesMapper.toCategoryDto(category);
+        return categoriesMapper.toCategoryDto(category);
     }
 
     @Override
     public CategoryDto createCategory(NewCategoryDto categoryDto) {
         Category category = new Category(null, categoryDto.getName());
         Category newCategory = categoryRepository.save(category);
-        return CategoriesMapper.toCategoryDto(newCategory);
+        return categoriesMapper.toCategoryDto(newCategory);
     }
 
     @Override
@@ -50,7 +54,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category oldCategory = getCategoryFromDB(categoryDto.getId());
         oldCategory.setName(categoryDto.getName());
         Category patchCategory = categoryRepository.save(oldCategory);
-        return CategoriesMapper.toCategoryDto(patchCategory);
+        return categoriesMapper.toCategoryDto(patchCategory);
     }
 
     @Override

@@ -31,12 +31,18 @@ public class EventServiceImpl implements EventService {
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
     private final StatClient statClient;
+    private final EventMapper eventMapper;
 
-    public EventServiceImpl(EventRepository eventRepository, UserRepository userRepository, CategoryRepository categoryRepository, StatClient statClient) {
+    public EventServiceImpl(EventRepository eventRepository,
+                            UserRepository userRepository,
+                            CategoryRepository categoryRepository,
+                            StatClient statClient,
+                            EventMapper eventMapper) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
         this.statClient = statClient;
+        this.eventMapper = eventMapper;
     }
 
     @Override
@@ -51,7 +57,7 @@ public class EventServiceImpl implements EventService {
                 request.getRemoteAddr(),
                 LocalDateTime.now()));
 
-        return eventList.stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
+        return eventList.stream().map(eventMapper::toEventShortDto).collect(Collectors.toList());
     }
 
     @Override
@@ -59,7 +65,7 @@ public class EventServiceImpl implements EventService {
 
         List<Event> eventList = eventRepository.adminSearchByParameters(paramModel);
 
-        return eventList.stream().map(EventMapper::toEventFullDto).collect(Collectors.toList());
+        return eventList.stream().map(eventMapper::toEventFullDto).collect(Collectors.toList());
     }
 
     @Override
@@ -72,7 +78,7 @@ public class EventServiceImpl implements EventService {
                 request.getRemoteAddr(),
                 LocalDateTime.now()));
 
-        return EventMapper.toEventFullDto(event);
+        return eventMapper.toEventFullDto(event);
     }
 
     @Override
@@ -80,13 +86,13 @@ public class EventServiceImpl implements EventService {
         Event event = getEventFromDB(eventId);
         if (!Objects.equals(event.getInitiator().getId(), userId))
             throw new ForbiddenException("InitiatorId not equals requestorId");
-        return EventMapper.toEventFullDto(event);
+        return eventMapper.toEventFullDto(event);
     }
 
     @Override
     public List<EventShortDto> getMyEvents(Long userId, Integer from, Integer size) {
         List<Event> eventList = eventRepository.findMyEvents(userId, from, size);
-        return eventList.stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
+        return eventList.stream().map(eventMapper::toEventShortDto).collect(Collectors.toList());
     }
 
     @Override
@@ -97,10 +103,12 @@ public class EventServiceImpl implements EventService {
         User initiator = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User with id=" + userId + " was not found."));
         Category category = getCategoryFromDB(newEventDto.getCategory());
-        Event eventForSave = EventMapper.toEvent(newEventDto, category, initiator);
+        Event eventForSave = eventMapper.toEvent(newEventDto);
+        eventForSave.setCategory(category);
+        eventForSave.setInitiator(initiator);
 
         Event saveEvent = eventRepository.save(eventForSave);
-        return EventMapper.toEventFullDto(saveEvent);
+        return eventMapper.toEventFullDto(saveEvent);
     }
 
     @Override
@@ -133,7 +141,7 @@ public class EventServiceImpl implements EventService {
 
         Event newEvent = eventRepository.save(event);
 
-        return EventMapper.toEventFullDto(newEvent);
+        return eventMapper.toEventFullDto(newEvent);
     }
 
     @Override
@@ -162,7 +170,7 @@ public class EventServiceImpl implements EventService {
             event.setRequestModeration(updateEventRequest.getRequestModeration());
 
         Event updateEvent = eventRepository.save(event);
-        return EventMapper.toEventFullDto(updateEvent);
+        return eventMapper.toEventFullDto(updateEvent);
     }
 
     @Override
@@ -176,7 +184,7 @@ public class EventServiceImpl implements EventService {
 
         event.setState(EventState.CANCELED);
         Event newEvent = eventRepository.save(event);
-        return EventMapper.toEventFullDto(newEvent);
+        return eventMapper.toEventFullDto(newEvent);
     }
 
     @Override
@@ -189,7 +197,7 @@ public class EventServiceImpl implements EventService {
 
         event.setState(EventState.PUBLISHED);
         Event publishEvent = eventRepository.save(event);
-        return EventMapper.toEventFullDto(publishEvent);
+        return eventMapper.toEventFullDto(publishEvent);
     }
 
     @Override
@@ -200,7 +208,7 @@ public class EventServiceImpl implements EventService {
 
         event.setState(EventState.CANCELED);
         Event rejectEvent = eventRepository.save(event);
-        return EventMapper.toEventFullDto(rejectEvent);
+        return eventMapper.toEventFullDto(rejectEvent);
     }
 
     @Override

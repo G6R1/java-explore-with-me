@@ -1,16 +1,11 @@
 package ru.practicum.explorewithme.mappers;
 
+import org.mapstruct.Mapper;
 import ru.practicum.explorewithme.dto.categories.CategoryDto;
 import ru.practicum.explorewithme.models.Category;
 
-public class CategoriesMapper {
-    public static CategoryDto toCategoryDto(Category category) {
-        if (category == null)
-            return null;
+@Mapper(componentModel = "spring")
+public interface CategoriesMapper {
 
-        return CategoryDto.builder()
-                .id(category.getId())
-                .name(category.getName())
-                .build();
-    }
+    CategoryDto toCategoryDto(Category category);
 }

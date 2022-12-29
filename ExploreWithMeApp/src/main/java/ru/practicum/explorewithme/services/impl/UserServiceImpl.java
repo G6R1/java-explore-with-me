@@ -18,16 +18,18 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper) {
         this.userRepository = userRepository;
+        this.userMapper = userMapper;
     }
 
     @Override
     public UserDto createUser(NewUserRequest newUserRequest) {
         User user = new User(null, newUserRequest.getName(), newUserRequest.getEmail(), new HashSet<>());
         User newUser = userRepository.save(user);
-        return UserMapper.toUserDto(newUser);
+        return userMapper.toUserDto(newUser);
     }
 
     @Override
@@ -39,7 +41,7 @@ public class UserServiceImpl implements UserService {
             userList = userRepository.findAllByIdsFromSize(ids, from, size);
         }
 
-        return userList.stream().map(UserMapper::toUserDto).collect(Collectors.toList());
+        return userList.stream().map(userMapper::toUserDto).collect(Collectors.toList());
     }
 
     @Override

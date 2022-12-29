@@ -18,6 +18,6 @@ public class CompilationDto {
     @NotNull
     private Boolean pinned;
     @NotBlank
-    String title;
+    private String title;
     private List<EventShortDto> events;
 }

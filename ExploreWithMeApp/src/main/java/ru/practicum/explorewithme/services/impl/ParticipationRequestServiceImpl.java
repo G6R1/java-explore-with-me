@@ -31,15 +31,18 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
     private final EventRepository eventRepository;
     private final EventService eventService;
     private final UserRepository userRepository;
+    private final ParticipationRequestMapper participationRequestMapper;
 
     public ParticipationRequestServiceImpl(ParticipationRequestRepository requestRepository,
                                            EventRepository eventRepository,
                                            EventService eventService,
+                                           ParticipationRequestMapper participationRequestMapper,
                                            UserRepository userRepository) {
         this.requestRepository = requestRepository;
         this.eventRepository = eventRepository;
         this.eventService = eventService;
         this.userRepository = userRepository;
+        this.participationRequestMapper = participationRequestMapper;
     }
 
     @Override
@@ -55,7 +58,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
         List<ParticipationRequest> requestList = requestRepository.findAllByEvent_Id(eventId);
 
         return requestList.stream()
-                .map(ParticipationRequestMapper::toParticipationRequestDto)
+                .map(participationRequestMapper::toParticipationRequestDto)
                 .collect(Collectors.toList());
     }
 
@@ -80,7 +83,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
         if (!confirm) {
             request.setStatus(ParticipationStatus.REJECTED);
             ParticipationRequest patchedRequest = requestRepository.save(request);
-            return ParticipationRequestMapper.toParticipationRequestDto(patchedRequest);
+            return participationRequestMapper.toParticipationRequestDto(patchedRequest);
         }
 
         if (event.getParticipantLimit() != 0
@@ -97,14 +100,14 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
                     eventId,
                     ParticipationStatus.PENDING);
 
-        return ParticipationRequestMapper.toParticipationRequestDto(patchedRequest);
+        return participationRequestMapper.toParticipationRequestDto(patchedRequest);
     }
 
     @Override
     public List<ParticipationRequestDto> getMyRequests(Long userId) {
         List<ParticipationRequest> requestList = requestRepository.findAllByRequester_Id(userId);
         return requestList.stream()
-                .map(ParticipationRequestMapper::toParticipationRequestDto)
+                .map(participationRequestMapper::toParticipationRequestDto)
                 .collect(Collectors.toList());
     }
 
@@ -131,7 +134,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
                 user,
                 event.getRequestModeration() ? ParticipationStatus.PENDING : ParticipationStatus.CONFIRMED);
         ParticipationRequest savedRequest = requestRepository.save(newRequest);
-        return ParticipationRequestMapper.toParticipationRequestDto(savedRequest);
+        return participationRequestMapper.toParticipationRequestDto(savedRequest);
     }
 
     @Override
@@ -155,7 +158,7 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
         }
 
         ParticipationRequest cancelRequest = requestRepository.save(request);
-        return ParticipationRequestMapper.toParticipationRequestDto(cancelRequest);
+        return participationRequestMapper.toParticipationRequestDto(cancelRequest);
     }
 
     private ParticipationRequest getRequestFromDB(Long requestId) {
