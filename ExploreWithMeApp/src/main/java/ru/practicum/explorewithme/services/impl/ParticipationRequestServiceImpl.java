@@ -1,6 +1,5 @@
 package ru.practicum.explorewithme.services.impl;
 
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explorewithme.EventState;
@@ -37,12 +36,13 @@ public class ParticipationRequestServiceImpl implements ParticipationRequestServ
     public ParticipationRequestServiceImpl(ParticipationRequestRepository requestRepository,
                                            EventRepository eventRepository,
                                            EventService eventService,
+                                           ParticipationRequestMapper participationRequestMapper,
                                            UserRepository userRepository) {
         this.requestRepository = requestRepository;
         this.eventRepository = eventRepository;
         this.eventService = eventService;
         this.userRepository = userRepository;
-        this.participationRequestMapper = Mappers.getMapper(ParticipationRequestMapper.class);
+        this.participationRequestMapper = participationRequestMapper;
     }
 
     @Override

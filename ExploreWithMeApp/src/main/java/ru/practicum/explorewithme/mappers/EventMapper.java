@@ -1,8 +1,9 @@
 package ru.practicum.explorewithme.mappers;
 
 
-import org.mapstruct.*;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.InjectionStrategy;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import ru.practicum.explorewithme.EventState;
 import ru.practicum.explorewithme.Location;
 import ru.practicum.explorewithme.dto.event.EventFullDto;
@@ -14,7 +15,7 @@ import ru.practicum.explorewithme.models.Event;
 public abstract class EventMapper {
 
     public abstract EventShortDto toEventShortDto(Event event);
-/*
+
     @Mapping(target = "location", expression = "java(getLocation(event.getLat(), event.getLon()))")
     public abstract EventFullDto toEventFullDto(Event event);
 
@@ -32,9 +33,9 @@ public abstract class EventMapper {
     @Mapping(target = "views", constant = "0")
     @Mapping(target = "compilations", expression = "java(new java.util.HashSet<>())")
     @Mapping(target = "category", ignore = true)
-    Event toEvent(NewEventDto newEventDto);
+    public abstract Event toEvent(NewEventDto newEventDto);
 
-    default EventState eventStatePending() {
+    protected EventState eventStatePending() {
         return EventState.PENDING;
-    }*/
+    }
 }

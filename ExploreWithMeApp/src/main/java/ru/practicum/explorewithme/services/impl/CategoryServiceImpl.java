@@ -1,6 +1,5 @@
 package ru.practicum.explorewithme.services.impl;
 
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import ru.practicum.explorewithme.dto.categories.CategoryDto;
 import ru.practicum.explorewithme.dto.categories.NewCategoryDto;
@@ -23,10 +22,12 @@ public class CategoryServiceImpl implements CategoryService {
     private final EventRepository eventRepository;
     private final CategoriesMapper categoriesMapper;
 
-    public CategoryServiceImpl(CategoryRepository categoryRepository, EventRepository eventRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository,
+                               EventRepository eventRepository,
+                               CategoriesMapper categoriesMapper) {
         this.categoryRepository = categoryRepository;
         this.eventRepository = eventRepository;
-        this.categoriesMapper = Mappers.getMapper(CategoriesMapper.class);
+        this.categoriesMapper = categoriesMapper;
     }
 
     @Override

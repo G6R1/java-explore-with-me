@@ -1,6 +1,5 @@
 package ru.practicum.explorewithme.services.impl;
 
-import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.explorewithme.EventState;
@@ -10,7 +9,6 @@ import ru.practicum.explorewithme.exceptions.BadRequestException;
 import ru.practicum.explorewithme.exceptions.ForbiddenException;
 import ru.practicum.explorewithme.exceptions.NotFoundException;
 import ru.practicum.explorewithme.mappers.EventMapper;
-import ru.practicum.explorewithme.mappers.TestEvMap;
 import ru.practicum.explorewithme.models.Category;
 import ru.practicum.explorewithme.models.Event;
 import ru.practicum.explorewithme.models.User;
@@ -34,19 +32,16 @@ public class EventServiceImpl implements EventService {
     private final CategoryRepository categoryRepository;
     private final StatClient statClient;
     private final EventMapper eventMapper;
-    private final TestEvMap testEvMap;
 
     public EventServiceImpl(EventRepository eventRepository,
                             UserRepository userRepository,
                             CategoryRepository categoryRepository,
                             StatClient statClient,
-                            TestEvMap testEvMap,
                             EventMapper eventMapper) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.categoryRepository = categoryRepository;
         this.statClient = statClient;
-        this.testEvMap = testEvMap;
         this.eventMapper = eventMapper;
     }
 
@@ -70,7 +65,7 @@ public class EventServiceImpl implements EventService {
 
         List<Event> eventList = eventRepository.adminSearchByParameters(paramModel);
 
-        return eventList.stream().map(testEvMap::toEventFullDto).collect(Collectors.toList());
+        return eventList.stream().map(eventMapper::toEventFullDto).collect(Collectors.toList());
     }
 
     @Override
@@ -83,7 +78,7 @@ public class EventServiceImpl implements EventService {
                 request.getRemoteAddr(),
                 LocalDateTime.now()));
 
-        return testEvMap.toEventFullDto(event);
+        return eventMapper.toEventFullDto(event);
     }
 
     @Override
@@ -91,7 +86,7 @@ public class EventServiceImpl implements EventService {
         Event event = getEventFromDB(eventId);
         if (!Objects.equals(event.getInitiator().getId(), userId))
             throw new ForbiddenException("InitiatorId not equals requestorId");
-        return testEvMap.toEventFullDto(event);
+        return eventMapper.toEventFullDto(event);
     }
 
     @Override
@@ -108,12 +103,12 @@ public class EventServiceImpl implements EventService {
         User initiator = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("User with id=" + userId + " was not found."));
         Category category = getCategoryFromDB(newEventDto.getCategory());
-        Event eventForSave = testEvMap.toEvent(newEventDto);
+        Event eventForSave = eventMapper.toEvent(newEventDto);
         eventForSave.setCategory(category);
         eventForSave.setInitiator(initiator);
 
         Event saveEvent = eventRepository.save(eventForSave);
-        return testEvMap.toEventFullDto(saveEvent);
+        return eventMapper.toEventFullDto(saveEvent);
     }
 
     @Override
@@ -146,7 +141,7 @@ public class EventServiceImpl implements EventService {
 
         Event newEvent = eventRepository.save(event);
 
-        return testEvMap.toEventFullDto(newEvent);
+        return eventMapper.toEventFullDto(newEvent);
     }
 
     @Override
@@ -175,7 +170,7 @@ public class EventServiceImpl implements EventService {
             event.setRequestModeration(updateEventRequest.getRequestModeration());
 
         Event updateEvent = eventRepository.save(event);
-        return testEvMap.toEventFullDto(updateEvent);
+        return eventMapper.toEventFullDto(updateEvent);
     }
 
     @Override
@@ -189,7 +184,7 @@ public class EventServiceImpl implements EventService {
 
         event.setState(EventState.CANCELED);
         Event newEvent = eventRepository.save(event);
-        return testEvMap.toEventFullDto(newEvent);
+        return eventMapper.toEventFullDto(newEvent);
     }
 
     @Override
@@ -202,7 +197,7 @@ public class EventServiceImpl implements EventService {
 
         event.setState(EventState.PUBLISHED);
         Event publishEvent = eventRepository.save(event);
-        return testEvMap.toEventFullDto(publishEvent);
+        return eventMapper.toEventFullDto(publishEvent);
     }
 
     @Override
@@ -213,7 +208,7 @@ public class EventServiceImpl implements EventService {
 
         event.setState(EventState.CANCELED);
         Event rejectEvent = eventRepository.save(event);
-        return testEvMap.toEventFullDto(rejectEvent);
+        return eventMapper.toEventFullDto(rejectEvent);
     }
 
     @Override

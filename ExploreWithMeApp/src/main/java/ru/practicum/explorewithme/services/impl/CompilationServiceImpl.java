@@ -23,7 +23,9 @@ public class CompilationServiceImpl implements CompilationService {
     private final EventRepository eventRepository;
     private final CompilationMapper compilationMapper;
 
-    public CompilationServiceImpl(CompilationRepository compilationRepository, EventRepository eventRepository, CompilationMapper compilationMapper) {
+    public CompilationServiceImpl(CompilationRepository compilationRepository,
+                                  EventRepository eventRepository,
+                                  CompilationMapper compilationMapper) {
         this.compilationRepository = compilationRepository;
         this.eventRepository = eventRepository;
         this.compilationMapper = compilationMapper;
